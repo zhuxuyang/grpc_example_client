@@ -42,7 +42,7 @@ func main() {
 
 	go func() {
 		http.HandleFunc("/test", handler) // each request calls handler
-		err := http.ListenAndServe("localhost:"+viper.GetString("port"), nil)
+		err := http.ListenAndServe("0.0.0.0:"+viper.GetString("port"), nil)
 		if err != nil {
 			log.Panic(err)
 		} else {
