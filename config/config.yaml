@@ -3,3 +3,17 @@ name: xuyang
 grpc_port: 13831
 port: 8080
 grpc_example_addr: 127.0.0.1:13831
+
+database:
+  host: 127.0.0.1
+  port: 30001
+  user: root
+  password: 123456
+  name: hx
+
+logDir: .
+
+
+#grpc_example_addr: "golang-course.grpc.com:32552"
+
+
