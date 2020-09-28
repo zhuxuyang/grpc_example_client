@@ -34,3 +34,4 @@ func InitLogger() {
 	_ = Logger.Attach("file", go_logger.LOGGER_LEVEL_DEBUG, fileConfig)
 	log.Println("log to dir : " + logDir)
 }
+

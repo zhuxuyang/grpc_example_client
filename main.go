@@ -11,7 +11,7 @@ import (
 func main() {
 	config.InitConfig()
 	grpc.InitGrpcClient()
-	resource.InitDB()
+	//resource.InitDB()
 	resource.InitLogger()
 	router.InitEcho()
 }

@@ -1,14 +1,12 @@
 package model
 
 import (
-	"encoding/json"
 	"github.com/jinzhu/gorm"
 )
 
 type UserA struct {
 	gorm.Model
-	Payload json.RawMessage
-	Ok      bool
+	Payload string
 }
 
 func (m *UserA) TableName() string {

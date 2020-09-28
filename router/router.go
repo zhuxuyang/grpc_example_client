@@ -15,5 +15,10 @@ func InitEcho() {
 		log.Println("response: ", string(bytes2))
 	}))
 	e.GET("/hello", handlers.Hello)
-	e.Logger.Fatal(e.Start(":8080"))
+	e.GET("/hellogrpc", handlers.HelloGrpc)
+	e.GET("/hehe/h", handlers.HelloV2)
+	hehe := e.Group("/hehe")
+
+	hehe.GET("/h", handlers.HelloV2)
+	e.Logger.Fatal(e.Start(":10800"))
 }
