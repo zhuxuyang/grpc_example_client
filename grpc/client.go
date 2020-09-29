@@ -1,39 +1,41 @@
 package grpc
 
 import (
-	"context"
-	"github.com/grpc-ecosystem/go-grpc-middleware/retry"
+	"log"
+	"strconv"
+
 	"github.com/spf13/viper"
 	"github.com/zhuxuyang/grpc_example_client/protos"
-	"google.golang.org/grpc"
-	"google.golang.org/grpc/codes"
-	"log"
-	"time"
+	"github.com/zhuxuyang/grpc_example_client/resource"
 )
 
 var ExampleClient protos.ExampleClient
 
 func InitGrpcClient() {
-	ctx, _ := context.WithTimeout(context.Background(), time.Second*10)
-	log.Println("address ", viper.GetString("grpc_example_addr"))
-	//conn, err := grpc.DialContext(ctx, viper.GetString("grpc_example_addr"), grpc.WithInsecure(), grpc.WithBlock())
-	//if err != nil {
-	//	log.Panic(err)
-	//}
+	consulConf := viper.GetStringMapString("golang-consul")
 
-	conn, err := grpc.DialContext(ctx, viper.GetString("grpc_example_addr"),
-		grpc.WithInsecure(),
-		grpc.WithBlock(),
-		grpc.WithUnaryInterceptor(grpc_retry.UnaryClientInterceptor(
-			grpc_retry.WithCodes(codes.Unavailable,codes.DeadlineExceeded),
-			grpc_retry.WithBackoff(func(attempt uint) time.Duration {
-				log.Println("重试了")
-				return 5 * time.Second
-			}),
+	port, _ := strconv.Atoi(consulConf["port"])
+	sClient := resource.NewGrpClient(consulConf["host"], port, consulConf["token"], "xuyang")
+	err := sClient.RunConsulClient()
+	if err != nil {
+		log.Fatalf("dial grpc tcp is failed, err is %v,config is %v ", err, consulConf)
+		return
+	}
+	conn := sClient.Conn
 
-			grpc_retry.WithMax(3),
-			),
-		))
+	//conn, err := grpc.DialContext(ctx, viper.GetString("grpc_example_addr"),
+	//	grpc.WithInsecure(),
+	//	grpc.WithBlock(),
+	//	grpc.WithUnaryInterceptor(grpc_retry.UnaryClientInterceptor(
+	//		grpc_retry.WithCodes(codes.Unavailable,codes.DeadlineExceeded),
+	//		grpc_retry.WithBackoff(func(attempt uint) time.Duration {
+	//			log.Println("重试了")
+	//			return 5 * time.Second
+	//		}),
+	//
+	//		grpc_retry.WithMax(3),
+	//		),
+	//	))
 	if err != nil {
 		log.Panic(err)
 	}

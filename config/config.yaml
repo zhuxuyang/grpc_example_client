@@ -2,7 +2,7 @@ name: xuyang
 
 grpc_port: 13831
 port: 8080
-grpc_example_addr: 127.0.0.1:13831
+grpc_example_addr: grpc_example:13831
 
 database:
   host: 127.0.0.1
@@ -13,7 +13,10 @@ database:
 
 logDir: .
 
+golang-consul:
+  port: 8500
+  host: consul
+  token: d
 
-#grpc_example_addr: "golang-course.grpc.com:32552"
 
 
