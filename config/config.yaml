@@ -1,4 +1,4 @@
-name: xuyang
+name: xuyang-client
 
 grpc_port: 13831
 port: 8081
@@ -15,7 +15,7 @@ logDir: .
 
 golang-consul:
   port: 8500
-  host: 127.0.0.1
+  host: consul
   token: d
 
 
