@@ -1,10 +1,13 @@
 package router
 
 import (
+	"fmt"
+	"log"
+
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
+	"github.com/spf13/viper"
 	"github.com/zhuxuyang/grpc_example_client/router/handlers"
-	"log"
 )
 
 func InitEcho() {
@@ -20,5 +23,5 @@ func InitEcho() {
 	hehe := e.Group("/hehe")
 
 	hehe.GET("/h", handlers.HelloV2)
-	e.Logger.Fatal(e.Start(":10800"))
+	e.Logger.Fatal(e.Start(fmt.Sprintf(":%d", viper.GetInt("port"))))
 }
